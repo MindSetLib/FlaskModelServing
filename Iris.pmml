@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.3">
+	<Header>
+		<Application name="JPMML-SkLearn" version="1.5.9"/>
+		<Timestamp>2018-12-30T10:20:06Z</Timestamp>
+	</Header>
+	<DataDictionary>
+		<DataField name="species" optype="categorical" dataType="string">
+			<Value value="setosa"/>
+			<Value value="versicolor"/>
+			<Value value="virginica"/>
+		</DataField>
+		<DataField name="sepal_length" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="4.3" rightMargin="7.9"/>
+		</DataField>
+		<DataField name="petal_length" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.0" rightMargin="6.9"/>
+		</DataField>
+		<DataField name="sepal_width" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="2.0" rightMargin="4.4"/>
+		</DataField>
+		<DataField name="petal_width" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="0.1" rightMargin="2.5"/>
+		</DataField>
+	</DataDictionary>
+	<MiningModel functionName="classification">
+		<MiningSchema>
+			<MiningField name="species" usageType="target"/>
+			<MiningField name="petal_width" missingValueTreatment="asIs"/>
+			<MiningField name="sepal_width" missingValueTreatment="asIs"/>
+			<MiningField name="petal_length" missingValueTreatment="asIs"/>
+			<MiningField name="sepal_length" missingValueTreatment="asIs"/>
+		</MiningSchema>
+		<ModelStats>
+			<UnivariateStats field="sepal_length">
+				<Counts totalFreq="150.0" missingFreq="0.0" invalidFreq="0.0"/>
+				<NumericInfo minimum="4.3" maximum="7.9" mean="5.843333333333335" standardDeviation="0.8253012917851409" median="5.8" interQuartileRange="1.3000000000000007"/>
+			</UnivariateStats>
+			<UnivariateStats field="petal_length">
+				<Counts totalFreq="150.0" missingFreq="0.0" invalidFreq="0.0"/>
+				<NumericInfo minimum="1.0" maximum="6.9" mean="3.7586666666666693" standardDeviation="1.7585291834055201" median="4.35" interQuartileRange="3.4999999999999996"/>
+			</UnivariateStats>
+			<UnivariateStats field="sepal_width">
+				<Counts totalFreq="150.0" missingFreq="0.0" invalidFreq="0.0"/>
+				<NumericInfo minimum="2.0" maximum="4.4" mean="3.0540000000000007" standardDeviation="0.4321465800705435" median="3.0" interQuartileRange="0.5"/>
+			</UnivariateStats>
+			<UnivariateStats field="petal_width">
+				<Counts totalFreq="150.0" missingFreq="0.0" invalidFreq="0.0"/>
+				<NumericInfo minimum="0.1" maximum="2.5" mean="1.1986666666666672" standardDeviation="0.760612618588172" median="1.3" interQuartileRange="1.5"/>
+			</UnivariateStats>
+		</ModelStats>
+		<Segmentation multipleModelMethod="modelChain">
+			<Segment id="1">
+				<True/>
+				<RegressionModel functionName="regression" normalizationMethod="logit">
+					<MiningSchema>
+						<MiningField name="sepal_length"/>
+						<MiningField name="petal_length"/>
+						<MiningField name="sepal_width"/>
+						<MiningField name="petal_width"/>
+					</MiningSchema>
+					<Output>
+						<OutputField name="decisionFunction(setosa)" optype="continuous" dataType="double" feature="predictedValue" isFinalResult="false"/>
+					</Output>
+					<RegressionTable intercept="0.26560616797551656">
+						<NumericPredictor name="sepal_length" coefficient="0.4149883282957017"/>
+						<NumericPredictor name="petal_length" coefficient="-2.262141177202073"/>
+						<NumericPredictor name="sepal_width" coefficient="1.4612973885622262"/>
+						<NumericPredictor name="petal_width" coefficient="-1.0290950992448902"/>
+					</RegressionTable>
+				</RegressionModel>
+			</Segment>
+			<Segment id="2">
+				<True/>
+				<RegressionModel functionName="regression" normalizationMethod="logit">
+					<MiningSchema>
+						<MiningField name="sepal_length"/>
+						<MiningField name="petal_length"/>
+						<MiningField name="sepal_width"/>
+						<MiningField name="petal_width"/>
+					</MiningSchema>
+					<Output>
+						<OutputField name="decisionFunction(versicolor)" optype="continuous" dataType="double" feature="predictedValue" isFinalResult="false"/>
+					</Output>
+					<RegressionTable intercept="1.0854237423889384">
+						<NumericPredictor name="sepal_length" coefficient="0.41663968559518616"/>
+						<NumericPredictor name="petal_length" coefficient="0.5776576286775388"/>
+						<NumericPredictor name="sepal_width" coefficient="-1.600833185257611"/>
+						<NumericPredictor name="petal_width" coefficient="-1.3855384286634413"/>
+					</RegressionTable>
+				</RegressionModel>
+			</Segment>
+			<Segment id="3">
+				<True/>
+				<RegressionModel functionName="regression" normalizationMethod="logit">
+					<MiningSchema>
+						<MiningField name="sepal_length"/>
+						<MiningField name="petal_length"/>
+						<MiningField name="sepal_width"/>
+						<MiningField name="petal_width"/>
+					</MiningSchema>
+					<Output>
+						<OutputField name="decisionFunction(virginica)" optype="continuous" dataType="double" feature="predictedValue" isFinalResult="false"/>
+					</Output>
+					<RegressionTable intercept="-1.2147145780786328">
+						<NumericPredictor name="sepal_length" coefficient="-1.7075251538239082"/>
+						<NumericPredictor name="petal_length" coefficient="2.470971680772024"/>
+						<NumericPredictor name="sepal_width" coefficient="-1.5342683399889776"/>
+						<NumericPredictor name="petal_width" coefficient="2.5553821129820844"/>
+					</RegressionTable>
+				</RegressionModel>
+			</Segment>
+			<Segment id="4">
+				<True/>
+				<RegressionModel functionName="classification" normalizationMethod="simplemax">
+					<MiningSchema>
+						<MiningField name="species" usageType="target"/>
+						<MiningField name="decisionFunction(setosa)"/>
+						<MiningField name="decisionFunction(versicolor)"/>
+						<MiningField name="decisionFunction(virginica)"/>
+					</MiningSchema>
+					<Output>
+						<OutputField name="probability(setosa)" optype="continuous" dataType="double" feature="probability" value="setosa"/>
+						<OutputField name="probability(versicolor)" optype="continuous" dataType="double" feature="probability" value="versicolor"/>
+						<OutputField name="probability(virginica)" optype="continuous" dataType="double" feature="probability" value="virginica"/>
+					</Output>
+					<RegressionTable intercept="0.0" targetCategory="setosa">
+						<NumericPredictor name="decisionFunction(setosa)" coefficient="1.0"/>
+					</RegressionTable>
+					<RegressionTable intercept="0.0" targetCategory="versicolor">
+						<NumericPredictor name="decisionFunction(versicolor)" coefficient="1.0"/>
+					</RegressionTable>
+					<RegressionTable intercept="0.0" targetCategory="virginica">
+						<NumericPredictor name="decisionFunction(virginica)" coefficient="1.0"/>
+					</RegressionTable>
+				</RegressionModel>
+			</Segment>
+		</Segmentation>
+	</MiningModel>
+</PMML>
