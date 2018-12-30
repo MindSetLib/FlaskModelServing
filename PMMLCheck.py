@@ -68,7 +68,7 @@ from os import getcwd
 
 
 
-#p = subprocess.Popen('java -jar '+ getcwd() +'\\java\\openscoring-server-executable-1.4.3.jar', shell=True)
+p = subprocess.Popen('java -jar '+ getcwd() +'/resourses/java/openscoring-server-executable-1.4.3.jar', shell=True)
 
 '''
 p = subprocess.Popen('java -jar C:\\Users\\1\\PycharmProjects\\FlaskModelServing\\resourses\\java\\openscoring-client-executable-1.4.3.jar',
@@ -93,11 +93,17 @@ print(result)
 
 
 from openscoring import Openscoring
-os = Openscoring("http://localhost:5000/openscoring")
+
+os = Openscoring("http://localhost:8080/openscoring")
+
+os.deployFile("Iris", "serialisation\\DecisionTreeIris.pmml")
+
+
+
 
 # A dictionary of user-specified parameters
 kwargs = {"auth" : ("admin", "adminadmin")}
-os.deployFile("Iris", "serialisation\\DecisionTreeIris.pmml", **kwargs)
+
 
 arguments = {
     "sepal_length" : 5.1,
@@ -106,7 +112,7 @@ arguments = {
     "petal_width" : 0.2
 }
 
-'''
+
 result = os.evaluate("Iris", arguments)
 print(result)
 
@@ -117,6 +123,5 @@ evaluationResponse = os.evaluate("Iris", evaluationRequest)
 print(evaluationResponse.result)
 
 
-os.evaluateCsvFile("Iris", "Iris.csv", "Iris-results.csv")
+os.evaluateCsvFile("Iris", "resourses/iris.csv", "resourses/Iris-results.csv")
 os.undeploy("Iris", **kwargs)
-'''
